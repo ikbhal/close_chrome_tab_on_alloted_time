@@ -25,6 +25,7 @@ chrome.commands.onCommand.addListener(function(commandName) {
     
     var alarmName = command.alarmName + Date.now()
     chrome.alarms.create(alarmName, {delayInMinutes: command.closeInMinutes});
+    activeTab.title = command.closeInMinutes + "m" + activeTab.title
 
     // set in storage alarm name, tab id
     var items = {};
