@@ -1,7 +1,7 @@
 // background.js
 
 chrome.commands.onCommand.addListener(function(commandName) {
-  console.log('onCommand event received for message: ', command);
+  console.log('onCommand event received for message: ', commandName);
   //alert("command is " + command);
 
   chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
@@ -31,7 +31,7 @@ chrome.commands.onCommand.addListener(function(commandName) {
 
     alert("created alarm " + command.alarmName  + " will close the tab " + activeTab.id);
     chrome.storage.sync.set(items, function() {
-        console.log('Value is set to ' + value);
+        console.log(command.alarmName + 'alarm tab id is set to ' + activeTab.id);
     });
      
   });
