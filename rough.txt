@@ -1,0 +1,319 @@
+Bismillah
+
+Source code:
+
+https://github.com/GoogleChrome/chrome-extensions-samples
+
+
+https://css-tricks.com/how-to-build-a-chrome-extension/
+
+document.addEventListener("DOMContentLoaded", () => {
+ var button = document.getElementById("submit")
+
+ button.addEventListener("click", (e) => {
+   console.log(e)
+ })
+})
+
+---
+
+Activate a file
+
+
+function exampleFunction() {
+ chrome.tabs.executeScript(() => {
+   chrome.tabs.executeScript({ file: "content.js" })
+ })
+}
+
+---
+
+Execute just a bit of code
+
+
+function exampleFunction() {
+ chrome.tabs.executeScript({
+   code: `console.log(‘hi there’)`
+  })
+}
+
+---
+Icon
+
+https://thenounproject.com/
+
+====
+
+https://thoughtbot.com/blog/how-to-make-a-chrome-extension
+
+
+Load your extension into Chrome
+To load your extension in Chrome, open up chrome://extensions/ in your browser and click “Developer mode” in the top right. Now click “Load unpacked extension…” and select the extension’s directory. You should now see your extension in the list.
+
+When you change or add code in your extension, just come back to this page and reload the page. Chrome will reload your extension.
+
+---
+Content scripts
+A content script is “a JavaScript file that runs in the context of web pages.” This means that a content script can interact with web pages that the browser visits. Not every JavaScript file in a Chrome extension can do this; we’ll see why later.
+
+Let’s add a content script named content.js:
+
+// content.js
+alert("Hello from your Chrome extension!")
+
+
+
+"content_scripts": [
+  {
+    "matches": [
+      "<all_urls>"
+    ],
+    "js": ["content.js"]
+  }
+]
+
+
+http://code.jquery.com/
+
+{
+  "manifest_version": 2,
+  "name": "My Cool Extension",
+  "version": "0.1",
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": ["jquery-2.1.3.min.js", "content.js"]
+    }
+  ]
+}
+
+
+--
+// content.js
+var firstHref = $("a[href^='http']").eq(0).attr("href");
+
+console.log(firstHref);
+
+---
+
+"browser_action": {
+  "default_icon": "icon.png"
+}
+
+
+---
+
+    "browser_action": {
+      "default_title": "Does a thing when you do a thing",
+      "default_popup": "popup.html",
+      "default_icon": {
+        "16": "icons/icon16.png",
+        "32": "icons/icon32.png"
+      }
+    }
+---
+,
+    "browser_action": {
+        "default_icon": "icon.png"
+    }
+
+--
+,
+    "page_action": {
+        "default_popup": "popup.html",
+        "default_icon": {
+            "16": "images/get_started16.png",
+            "32": "images/get_started32.png",
+            "48": "images/get_started48.png",
+            "128": "images/get_started128.png"
+          }
+      }
+
+---
+how to execute alarm 
+https://stackoverflow.com/questions/17727734/how-to-use-chrome-alarms-for-google-chrome-extension
+
+{
+  "manifest_version": 2,
+
+  "name": "Alarm test",
+  "description": "This extension alarms.",
+  "version": "1.0",
+
+  "permissions": [
+    "alarms"
+  ],
+
+  "background": {
+    "scripts": ["eventPage.js"],
+    "persistent": false
+  },
+
+  "browser_action": {
+    "default_icon": "icon.png",
+    "default_popup": "popup.html"
+  }
+}
+
+chrome.alarms.onAlarm.addListener(function(){
+        alert('great');
+    });
+
+
+    popup.html
+
+<!doctype html>
+<html>
+<head>
+<title>Alarms Popup</title>
+
+<script src="popup.js"></script>
+</head>
+<body>
+<a href="" id="alarmOn">ON</a>
+<a href="" id="alarmOff">OFF</a>
+</ul>
+</body>
+</html>
+
+---
+var alarmClock = {
+
+        onHandler : function(e) {
+            chrome.alarms.create("myAlarm", {delayInMinutes: 0.1, periodInMinutes: 0.2} );
+                    window.close();
+        },
+
+        offHandler : function(e) {
+            chrome.alarms.clear("myAlarm");
+                    window.close();
+        },
+
+        setup: function() {
+            var a = document.getElementById('alarmOn');
+            a.addEventListener('click',  alarmClock.onHandler );
+            var a = document.getElementById('alarmOff');
+            a.addEventListener('click',  alarmClock.offHandler );
+        }
+};
+
+document.addEventListener('DOMContentLoaded', function () {
+    alarmClock.setup();
+});
+
+And the important bit in eventPage.js
+
+chrome.alarms.onAlarm.addListener(function(alarm) {
+  alert("Beep");
+});
+
+---
+    "commands": {
+      "close_in_1_minutes": {
+        "suggested_key": {
+          "default": "Ctrl+Shift+1",
+          "mac": "MacCtrl+Shift+1"
+        },
+        "description": "Close current tab in 1 minute"
+      },
+      "close_in_2_minutes": {
+        "suggested_key": {
+          "default": "Ctrl+Shift+2",
+          "mac": "MacCtrl+Shift+2"
+        },
+        "description": "Close current tab in 2 minute"
+      },
+      "close_in_3_minutes": {
+        "suggested_key": {
+          "default": "Ctrl+Shift+3",
+          "mac": "MacCtrl+Shift+3"
+        },
+        "description": "Close current tab in 3 minute"
+      },
+      "close_in_5_minutes": {
+        "suggested_key": {
+          "default": "Ctrl+Shift+5",
+          "mac": "MacCtrl+Shift+5"
+        },
+        "description": "Close current tab in 5 minutes"
+      },
+      "close_in_10_minutes": {
+        "suggested_key": {
+          "default": "Ctrl+Shift+4",
+          "mac": "MacCtrl+Shift+4"
+        },
+        "description": "Close current tab in 10 mintes"
+      },
+      "close_in_15_minutes": {
+        "suggested_key": {
+          "default": "Ctrl+Shift+6",
+          "mac": "MacCtrl+Shift+6"
+        },
+        "description": "Close current tab in 15 mintes"
+      },
+      "close_in_30_minutes": {
+        "suggested_key": {
+          "default": "Ctrl+Shift+7",
+          "mac": "MacCtrl+Shift+7"
+        },
+        "description": "Close current tab in 30 mintes"
+      },
+      "close_in_45_minutes": {
+        "suggested_key": {
+          "default": "Ctrl+Shift+8",
+          "mac": "MacCtrl+Shift+9"
+        },
+        "description": "Close current tab in 45 mintes"
+      },
+      "close_in_60_minutes": {
+        "suggested_key": {
+          "default": "Ctrl+Shift+9",
+          "mac": "MacCtrl+Shift+9"
+        },
+        "description": "Close current tab in 60 mintes"
+      }
+
+---
+
+https://developer.chrome.com/docs/extensions/reference/storage/
+
+Usage 
+To store user data for your extension, you can use either storage.sync:
+
+chrome.storage.sync.set({key: value}, function() {
+  console.log('Value is set to ' + value);
+});
+
+chrome.storage.sync.get(['key'], function(result) {
+  console.log('Value currently is ' + result.key);
+});
+
+---
+function saveChanges() {
+  // Get a value saved in a form.
+  var theValue = textarea.value;
+  // Check that there's some code there.
+  if (!theValue) {
+    message('Error: No value specified');
+    return;
+  }
+  // Save it using the Chrome extension storage API.
+  chrome.storage.sync.set({'value': theValue}, function() {
+    // Notify that we saved.
+    message('Settings saved');
+  });
+}
+---
+chrome.storage.onChanged.addListener(function(changes, namespace) {
+  for (var key in changes) {
+    var storageChange = changes[key];
+    console.log('Storage key "%s" in namespace "%s" changed. ' +
+                'Old value was "%s", new value is "%s".',
+                key,
+                namespace,
+                storageChange.oldValue,
+                storageChange.newValue);
+  }
+});

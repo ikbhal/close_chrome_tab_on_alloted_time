@@ -1,0 +1,55 @@
+{
+    "manifest_version": 2,
+    "name": "Invest Time",
+    "version": "1.0.0",
+    "description": "Close the current tab after given alloted time",
+    "short_name": "Invest time",
+    "permissions": ["activeTab", "declarativeContent", "storage","tabs", "<all_urls>", "alarms"],
+    "content_scripts": [
+        {
+          "matches": [
+            "<all_urls>"
+          ],
+          "js": ["jquery-3.5.1.min.js", "content.js"]
+        }
+    ],
+    "background": {
+        "scripts": ["background.js"]
+    },
+    "browser_action": {
+        "default_icon": "icon.png",
+        "default_popup": "popup.html"
+    },
+    "commands": {
+  
+      "close_in_5_minutes": {
+        "suggested_key": {
+          "default": "Ctrl+Shift+1",
+          "mac": "MacCtrl+Shift+2"
+        },
+        "description": "Close current tab in 5 minutes"
+      },
+      "close_in_10_minutes": {
+        "suggested_key": {
+          "default": "Ctrl+Shift+2",
+          "mac": "MacCtrl+Shift+2"
+        },
+        "description": "Close current tab in 10 mintes"
+      },
+      "close_in_15_minutes": {
+        "suggested_key": {
+          "default": "Ctrl+Shift+3",
+          "mac": "MacCtrl+Shift+3"
+        },
+        "description": "Close current tab in 15 mintes"
+      },
+      "close_in_30_minutes": {
+        "suggested_key": {
+          "default": "Ctrl+Shift+4",
+          "mac": "MacCtrl+Shift+4"
+        },
+        "description": "Close current tab in 30 mintes"
+      }
+
+  }
+}
