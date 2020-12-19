@@ -23,13 +23,14 @@ chrome.commands.onCommand.addListener(function(commandName) {
 
     var command = result[0];
     
-    chrome.alarms.create(command.alarmName, {delayInMinutes: command.closeInMinutes});
+    var alarmName = command.alarmName + Date.now()
+    chrome.alarms.create(alarmName, {delayInMinutes: command.closeInMinutes});
 
     // set in storage alarm name, tab id
     var items = {};
-    items[command.alarmName ] = activeTab.id;
+    items[alarmName ] = activeTab.id;
 
-    alert("created alarm " + command.alarmName  + " will close the tab " + activeTab.id);
+    alert("created alarm " + alarmName  + " will close the tab " + activeTab.id);
     chrome.storage.sync.set(items, function() {
         console.log(command.alarmName + 'alarm tab id is set to ' + activeTab.id);
     });
